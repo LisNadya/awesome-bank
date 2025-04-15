@@ -1,0 +1,36 @@
+<div class="form">
+  <h1>{{ isDeposit ? "Deposit" : "Withdraw" }}</h1>
+  @if (isSubmitted) {
+  <p>
+    Thank you. <strong>${{ amountField.value | number : "1.2-2" }}</strong> has
+    been {{ isDeposit ? "has been deposited to your account" : "withdrawn" }}.
+  </p>
+  } @else {
+  <p>
+    Enter the amount you would want to {{ isDeposit ? "deposit" : "withdraw" }}.
+  </p>
+  <mat-card appearance="outlined">
+    <mat-card-content class="card-content">
+      <form>
+        <mat-form-field class="full-width">
+          <mat-label>Amount ($)</mat-label>
+          <input matInput min="0" type="number" [formControl]="amountField" />
+
+          @if (amountField.hasError('required')) {
+          <mat-error>Amount is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  }
+
+  <div class="form-button">
+    <button mat-stroked-button (click)="navigateToPage('menu')">
+      Back to menu
+    </button>
+    @if (!isSubmitted) {
+    <button mat-flat-button (click)="submit()">Submit</button>
+    }
+  </div>
+</div>

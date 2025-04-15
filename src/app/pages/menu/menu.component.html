@@ -1,0 +1,46 @@
+<div class="form">
+  <h1>AwesomeGIC Bank</h1>
+
+  @if (showExit) {
+  <p>
+    Thank you for banking with AwesomeGIC Bank. <br />
+    Have a nice day!
+  </p>
+  <mat-card appearance="outlined">
+    <mat-card-content class="menu-content">
+      <button mat-flat-button (click)="showMenuSelection()">Menu</button>
+    </mat-card-content>
+  </mat-card>
+  } @else {
+  <p>
+    Welcome to AwesomeGIC Bank! @if (showMainMenu) { What would you like to do?
+    } @else { Choose your account. }
+  </p>
+  <mat-card appearance="outlined">
+    <mat-card-content class="menu-content">
+      @if (showMainMenu) {
+      <button mat-flat-button (click)="navigateToPage('create-account')">
+        Create Account
+      </button>
+      <button mat-flat-button (click)="showAccountSelection('deposit')">
+        Deposit
+      </button>
+      <button mat-flat-button (click)="showAccountSelection('withdraw')">
+        Withdraw
+      </button>
+      <button mat-flat-button (click)="showAccountSelection('view-statement')">
+        Print Statement
+      </button>
+      <button mat-stroked-button (click)="exitMenu()">Exit</button>
+      } @else { @for (account of accounts; track account.accountName) {
+      <button mat-flat-button (click)="selectAccount(account.id)">
+        {{ account.accountName }}
+      </button>
+      } @empty { You have no accounts. }
+
+      <button mat-stroked-button (click)="showMenuSelection()">Back</button>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
