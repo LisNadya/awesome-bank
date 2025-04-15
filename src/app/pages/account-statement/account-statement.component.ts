@@ -24,6 +24,6 @@ export class AccountStatementComponent {
   }
 
   navigateToMenu(): void {
-    this.router.navigateByUrl('menu');
+    this.router.navigateByUrl('/');
   }
 }

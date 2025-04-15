@@ -26,9 +26,7 @@
   }
 
   <div class="form-button">
-    <button mat-stroked-button (click)="navigateToPage('menu')">
-      Back to menu
-    </button>
+    <button mat-stroked-button (click)="navigateToMenu()">Back to menu</button>
     @if (!isSubmitted) {
     <button mat-flat-button (click)="submit()">Submit</button>
     }

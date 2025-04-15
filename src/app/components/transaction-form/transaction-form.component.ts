@@ -27,8 +27,8 @@ export class TransactionFormComponent {
 
   constructor(private router: Router, private accountService: AccountService) {}
 
-  navigateToPage(pageUrl: string): void {
-    this.router.navigateByUrl(pageUrl);
+  navigateToMenu(): void {
+    this.router.navigateByUrl('/');
   }
 
   submit(): void {

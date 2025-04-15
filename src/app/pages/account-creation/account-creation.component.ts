@@ -27,7 +27,7 @@ export class AccountCreationComponent {
   constructor(private router: Router, private accountService: AccountService) {}
 
   navigateToMenu(): void {
-    this.router.navigateByUrl('menu');
+    this.router.navigateByUrl('/');
   }
 
   create(): void {
