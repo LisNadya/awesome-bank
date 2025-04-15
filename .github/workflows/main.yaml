@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy drawing-canvas to github pages
+name: Deploy awesome-bank to github pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: "./dist"
+          path: "./dist/awesome-bank"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
