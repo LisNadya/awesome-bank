@@ -30,7 +30,7 @@ export class AccountCreationComponent {
     this.router.navigateByUrl('/');
   }
 
-  create(): void {
+  createAccount(): void {
     this.accountNameField.markAsTouched();
 
     if (!this.accountNameField.valid) return;

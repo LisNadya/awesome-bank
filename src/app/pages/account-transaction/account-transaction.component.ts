@@ -1,16 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AccountService } from '../../services/account.service';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
-import { AccountService } from '../../services/account.service';
 
 @Component({
-  selector: 'transaction-form',
-  templateUrl: './transaction-form.component.html',
+  selector: 'account-transaction',
+  templateUrl: './account-transaction.component.html',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -20,20 +20,24 @@ import { AccountService } from '../../services/account.service';
     CommonModule,
   ],
 })
-export class TransactionFormComponent {
-  @Input() isDeposit: boolean = false;
+export class AccountTransactionComponent implements OnInit {
+  isDeposit: boolean = false;
   isSubmitted: boolean = false;
+
   amountField: FormControl = new FormControl(null, [Validators.required]);
 
-  constructor(private router: Router, private accountService: AccountService) {}
+  constructor(public accountService: AccountService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.isDeposit = this.router.url.includes('deposit');
+  }
 
   navigateToMenu(): void {
     this.router.navigateByUrl('/');
   }
 
-  submit(): void {
+  submitTransaction(): void {
     this.amountField.markAsTouched();
-
     if (!this.amountField.valid) return;
 
     this.isSubmitted = true;

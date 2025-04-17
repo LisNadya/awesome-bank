@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { AccountDepositComponent } from './pages/account-deposit/account-deposit.component';
-import { AccountWithdrawComponent } from './pages/account-withdraw/account-withdraw.component';
+import { AccountTransactionComponent } from './pages/account-transaction/account-transaction.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { AccountStatementComponent } from './pages/account-statement/account-statement.component';
 import { AccountCreationComponent } from './pages/account-creation/account-creation.component';
@@ -20,11 +19,11 @@ export const routes: Routes = [
   },
   {
     path: 'deposit',
-    component: AccountDepositComponent,
+    component: AccountTransactionComponent,
   },
   {
     path: 'withdraw',
-    component: AccountWithdrawComponent,
+    component: AccountTransactionComponent,
   },
   {
     path: 'view-statement',

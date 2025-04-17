@@ -6,8 +6,28 @@ import { Guid } from 'guid-typescript';
   providedIn: 'root',
 })
 export class AccountService {
-  accounts: Account[] = [];
-  selectedAccountId: string = '';
+  private accounts: Account[] = [];
+  private selectedAccountId: string = '';
+
+  get accountList(): Account[] {
+    return this.accounts;
+  }
+
+  get accountBalance(): number {
+    return this.getCurrentAccount()?.accountBalance ?? 0;
+  }
+
+  get accountName(): string {
+    return this.getCurrentAccount()?.accountName ?? '';
+  }
+
+  get accountTransactionHistory(): Transaction[] {
+    return this.getCurrentAccount()?.transactionHistory ?? [];
+  }
+
+  set accountId(value: string) {
+    this.selectedAccountId = value;
+  }
 
   addAccount(name: string): void {
     const accountDetail: Account = {
@@ -22,16 +42,12 @@ export class AccountService {
     this.accounts.push(accountDetail);
   }
 
-  selectAccount(id: string): void {
-    this.selectedAccountId = id;
-  }
-
-  updateAccountTransaction(amount: number, isAdd: boolean = false): void {
+  updateAccountTransaction(amount: number, isDeposit: boolean = false): void {
     const account = this.getCurrentAccount();
 
     if (!account) return;
 
-    const transactionAmount = isAdd ? amount : -amount;
+    const transactionAmount = isDeposit ? amount : -amount;
     const transactionBalance = account.accountBalance + transactionAmount;
 
     account.accountBalance = transactionBalance;
@@ -43,15 +59,7 @@ export class AccountService {
     account.dateTimeUpdated = this.getCurrentDateTime();
   }
 
-  getAccountTransactionHistory(): Transaction[] {
-    const account = this.getCurrentAccount();
-
-    if (!account) return [];
-
-    return account.transactionHistory;
-  }
-
-  getCurrentAccount(): Account | undefined {
+  private getCurrentAccount(): Account | undefined {
     return this.accounts.find(({ id }) => id === this.selectedAccountId);
   }
 

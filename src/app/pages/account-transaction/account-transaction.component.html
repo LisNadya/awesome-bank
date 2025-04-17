@@ -1,5 +1,8 @@
 <div class="form">
   <h1>{{ isDeposit ? "Deposit" : "Withdraw" }}</h1>
+
+  <p><strong>Account name:</strong> {{ accountService.accountName }}</p>
+
   @if (isSubmitted) {
   <p>
     Thank you. <strong>${{ amountField.value | number : "1.2-2" }}</strong> has
@@ -14,11 +17,20 @@
       <form>
         <mat-form-field class="full-width">
           <mat-label>Amount ($)</mat-label>
-          <input matInput min="0" type="number" [formControl]="amountField" />
+          <input
+            matInput
+            min="0"
+            [max]="isDeposit ? null : accountService.accountBalance"
+            type="number"
+            [formControl]="amountField"
+          />
 
-          @if (amountField.hasError('required')) {
-          <mat-error>Amount is <strong>required</strong></mat-error>
-          }
+          <mat-error>
+            @if (amountField.hasError('required')) { Amount is
+            <strong>required</strong> } @if (amountField.hasError('max')) {
+            Insufficient balance to <strong>withdraw</strong>
+            }
+          </mat-error>
         </mat-form-field>
       </form>
     </mat-card-content>
@@ -26,9 +38,9 @@
   }
 
   <div class="form-button">
-    <button mat-stroked-button (click)="navigateToMenu()">Back to menu</button>
+    <button mat-stroked-button (click)="navigateToMenu()">Back</button>
     @if (!isSubmitted) {
-    <button mat-flat-button (click)="submit()">Submit</button>
+    <button mat-flat-button (click)="submitTransaction()">Submit</button>
     }
   </div>
 </div>

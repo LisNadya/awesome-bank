@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
@@ -10,23 +10,23 @@ import { AccountService } from '../../services/account.service';
   styleUrl: 'menu.component.scss',
   imports: [MatButtonModule, MatCardModule],
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   showExit: boolean = false;
   showMainMenu: boolean = true;
-  transactionType: TransactionType = '';
+  selectedMenu: TransactionType = '';
 
   accounts: Account[] = [];
 
   constructor(private router: Router, private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.accounts = this.accountService.accounts;
+    this.setAccountList();
     this.showMenuSelection();
   }
 
   selectAccount(id: string): void {
-    this.accountService.selectAccount(id);
-    this.navigateToPage(this.transactionType);
+    this.accountService.accountId = id;
+    this.navigateToPage(this.selectedMenu);
   }
 
   navigateToPage(pageUrl: string) {
@@ -35,17 +35,21 @@ export class MenuComponent {
 
   showAccountSelection(type: TransactionType): void {
     this.showMainMenu = false;
-    this.transactionType = type;
+    this.selectedMenu = type;
   }
 
   showMenuSelection(): void {
     this.showMainMenu = true;
     this.showExit = false;
-    this.transactionType = '';
-    this.accountService.selectAccount('');
+    this.selectedMenu = '';
+    this.accountService.accountId = '';
   }
 
   exitMenu(): void {
     this.showExit = true;
+  }
+
+  private setAccountList(): void {
+    this.accounts = this.accountService.accountList;
   }
 }
