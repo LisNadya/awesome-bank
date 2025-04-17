@@ -6,7 +6,8 @@ import { Guid } from 'guid-typescript';
   providedIn: 'root',
 })
 export class AccountService {
-  private accounts: Account[] = [];
+  private rawData = localStorage.getItem('account');
+  private accounts: Account[] = this.rawData ? JSON.parse(this.rawData) : [];
   private selectedAccountId: string = '';
 
   get accountList(): Account[] {
@@ -25,6 +26,10 @@ export class AccountService {
     return this.getCurrentAccount()?.transactionHistory ?? [];
   }
 
+  get accountId(): string {
+    return this.selectedAccountId;
+  }
+
   set accountId(value: string) {
     this.selectedAccountId = value;
   }
@@ -40,6 +45,8 @@ export class AccountService {
     };
 
     this.accounts.push(accountDetail);
+
+    this.saveState();
   }
 
   updateAccountTransaction(amount: number, isDeposit: boolean = false): void {
@@ -57,6 +64,12 @@ export class AccountService {
       amount: transactionAmount,
     });
     account.dateTimeUpdated = this.getCurrentDateTime();
+
+    this.saveState();
+  }
+
+  private saveState(): void {
+    localStorage.setItem('account', JSON.stringify(this.accounts));
   }
 
   private getCurrentAccount(): Account | undefined {

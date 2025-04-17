@@ -32,6 +32,11 @@ export class AccountStatementComponent implements OnInit, AfterViewInit {
   constructor(public accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
+    if (!this.accountService.accountId) {
+      this.navigateToMenu();
+      return;
+    }
+
     this.transactionHistory.data =
       this.accountService.accountTransactionHistory;
   }

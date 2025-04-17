@@ -29,6 +29,11 @@ export class AccountTransactionComponent implements OnInit {
   constructor(public accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
+    if (!this.accountService.accountId) {
+      this.navigateToMenu();
+      return;
+    }
+
     this.isDeposit = this.router.url.includes('deposit');
   }
 
